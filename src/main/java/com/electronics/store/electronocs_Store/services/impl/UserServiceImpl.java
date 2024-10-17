@@ -4,11 +4,13 @@ import com.electronics.store.electronocs_Store.dto.UserDTO;
 import com.electronics.store.electronocs_Store.entity.User;
 import com.electronics.store.electronocs_Store.repository.UserRepository;
 import com.electronics.store.electronocs_Store.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,8 +18,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    ModelMapper modelMapper;
+
     @Override
-    public UserDTO creaUser(UserDTO userDto) {
+    public UserDTO createUser(UserDTO userDto) {
         //generate unique id in String format
         String userId = UUID.randomUUID().toString();
         userDto.setUserid(userId);
@@ -57,45 +62,54 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getAllUser() {
-        return List.of();
+        List<User> user = userRepository.findAll();
+        List<UserDTO> dtoList = user.stream().map(user1 -> entityTODto(user1)).collect(Collectors.toList());
+        return dtoList;
     }
+
 
     @Override
     public UserDTO getUserByEmail(String email) {
-        return null;
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found with given Email"));
+    return entityTODto(user);
     }
 
     @Override
     public UserDTO getUserById(String userId) {
-        return null;
+
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("user not found with given ID"));
+
+        return entityTODto(user);
     }
 
     @Override
     public List<UserDTO> searchUser(String keyword) {
-        return List.of();
+        List<User> userList = userRepository.findByNameContaining(keyword);
+
+        return userList.stream().map(user -> entityTODto(user)).collect(Collectors.toList());
     }
     private UserDTO entityTODto(User saveUser) {
-        UserDTO userDTO = UserDTO.builder().userid(saveUser.getUserid())
-                .name(saveUser.getName())
-                .email(saveUser.getEmail())
-                .password(saveUser.getPassword())
-                .about(saveUser.getAbout())
-                .gender(saveUser.getGender())
-                .imageName(saveUser.getImageName())
-                .build();
-        return userDTO;
+//        UserDTO userDTO = UserDTO.builder().userid(saveUser.getUserid())
+//                .name(saveUser.getName())
+//                .email(saveUser.getEmail())
+//                .password(saveUser.getPassword())
+//                .about(saveUser.getAbout())
+//                .gender(saveUser.getGender())
+//                .imageName(saveUser.getImageName())
+//                .build();
+        return modelMapper.map(saveUser,UserDTO.class);
     }
 
     private User dtoToEntity(UserDTO userDto) {
-        User user = User.builder().userid(userDto.getUserid())
-            .name(userDto.getName())
-            .email(userDto.getEmail())
-            .password(userDto.getPassword())
-            .about(userDto.getAbout())
-            .gender(userDto.getGender())
-            .imageName(userDto.getImageName())
-            .build();
+//        User user = User.builder().userid(userDto.getUserid())
+//            .name(userDto.getName())
+//            .email(userDto.getEmail())
+//            .password(userDto.getPassword())
+//            .about(userDto.getAbout())
+//            .gender(userDto.getGender())
+//            .imageName(userDto.getImageName())
+//            .build();
 
-        return user;
+        return modelMapper.map(userDto,User.class);
     }
 }
