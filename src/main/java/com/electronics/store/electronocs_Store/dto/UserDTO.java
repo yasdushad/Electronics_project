@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -20,7 +21,9 @@ public class UserDTO {
     private String name;
 
 //    @Email(message = "Invalid Email ")
-    @Email(regexp = "\0\b[A-Z0-9._%-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b\n",message = "Invalid User Email")
+@Email(message = "Invalid email format")
+@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
+        message = "Email must be a Gmail address (@gmail.com)")
     @NotBlank(message = "Email is required")
     private String email;
 
