@@ -17,7 +17,7 @@ private Logger logger = LoggerFactory.getLogger(ImageNameValidator.class);
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
       //logic
-
+        logger.info("Message from Valid {}",s);
         if (s.isBlank())
             return false;
         else

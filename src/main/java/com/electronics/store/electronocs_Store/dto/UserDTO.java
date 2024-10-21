@@ -1,5 +1,6 @@
 package com.electronics.store.electronocs_Store.dto;
 
+import com.electronics.store.electronocs_Store.validation.ImageNameValidation;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
@@ -36,5 +37,6 @@ public class UserDTO {
     @NotBlank(message = "write something about about yourself")
     private String about;
 
+    @ImageNameValidation
     private String imageName;
 }
