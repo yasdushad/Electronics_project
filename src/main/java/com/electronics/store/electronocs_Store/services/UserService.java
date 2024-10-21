@@ -1,5 +1,6 @@
 package com.electronics.store.electronocs_Store.services;
 
+import com.electronics.store.electronocs_Store.dto.PageableResponse;
 import com.electronics.store.electronocs_Store.dto.UserDTO;
 import com.electronics.store.electronocs_Store.entity.User;
 
@@ -17,7 +18,7 @@ public interface UserService {
     void deleteUser (String userId);
 
     //getAll user
-    List<UserDTO> getAllUser();
+    PageableResponse<UserDTO> getAllUser(int pageNumber, int pageSize, String sortBy, String sortDir);
 
     // get single user by email
     UserDTO getUserByEmail(String email);

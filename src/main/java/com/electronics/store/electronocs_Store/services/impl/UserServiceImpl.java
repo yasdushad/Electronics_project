@@ -1,5 +1,6 @@
 package com.electronics.store.electronocs_Store.services.impl;
 
+import com.electronics.store.electronocs_Store.dto.PageableResponse;
 import com.electronics.store.electronocs_Store.dto.UserDTO;
 import com.electronics.store.electronocs_Store.entity.User;
 import com.electronics.store.electronocs_Store.exception.ResourceNotFoundException;
@@ -7,7 +8,12 @@ import com.electronics.store.electronocs_Store.repository.UserRepository;
 import com.electronics.store.electronocs_Store.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.UUID;
@@ -62,10 +68,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getAllUser() {
-        List<User> user = userRepository.findAll();
+    public PageableResponse<UserDTO> getAllUser(int pageNumber, int pageSize, String sortBy, String sortDir) {
+//        Sort sort = Sort.by(sortBy) ;
+        Sort sort = (sortDir.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()):(Sort.by(sortBy).ascending());
+        Pageable pageable = PageRequest.of(pageNumber,pageSize,sort);
+        Page<User> page = userRepository.findAll(pageable);
+        List<User> user = page.getContent();
         List<UserDTO> dtoList = user.stream().map(user1 -> entityTODto(user1)).collect(Collectors.toList());
-        return dtoList;
+        PageableResponse<UserDTO> response = new PageableResponse<>();
+        response.setContent(dtoList);
+        response.setPageNumber(page.getNumber());
+        response.setPageSize(page.getSize());
+        response.setTotalElements(page.getTotalElements());
+        response.setLastPage(page.isLast());
+
+        return response;
     }
 
 

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add New Failure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Oracle-Themed CSS -->
+    <style>
+        /* General body styling */
+        body {
+            font-family: "Arial", sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container box styling */
+        .container {
+            width: 400px;
+            margin: 60px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #F89406; /* Oracle-style orange accent */
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+       .header h1 {
+            margin-left: 10px;
+            font-size: 22px;
+            color: #F89406; /* Oracle orange color */
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+        }
+ .train-icon {
+            font-size: 24px;
+            color: #0076D7; /* Oracle blue accent */
+            margin-right: 10px;
+        }
+        .dli-label {
+            font-weight: bold;
+            font-size: 16px;
+            color: #0076D7; /* Oracle blue accent */
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        /* Submit Button */
+        .submit-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #F89406; /* Oracle orange */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+
+        }
+
+
+
+        /* Back Button */
+        .back-button {
+            text-decoration: none;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .back-button:hover {
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="header">
+        <a href="/home" class="back-button">&#8592;</a> <!-- Back Button -->
+        <h1>
+            <i class="fas fa-train train-icon"></i>Add New Failure</h1>
+        <span class="dli-label">DLI</span>
+    </div>
+
+    <form th:action="@{/failures}" th:method="post" class="failure-form">
+        <!-- Failure Cause Dropdown -->
+        <div class="form-group">
+            <label for="failureCause">Failure Cause</label>
+            <select id="failureCause" name="failureCause" required>
+                <option value="" disabled selected>Select a Cause</option>
+                <option value="Hardware">Hardware</option>
+                <option value="Software">Software</option>
+                <option value="Network">Network</option>
+            </select>
+        </div>
+
+        <!-- Failure Date -->
+        <div class="form-group">
+            <label for="failureDate">Failure Date</label>
+            <input type="date" id="failureDate" name="failureDate" required>
+        </div>
+
+        <!-- Reported Date -->
+        <div class="form-group">
+            <label for="reportedDate">Reported Date</label>
+            <input type="date" id="reportedDate" name="reportedDate" required>
+        </div>
+
+        <!-- Reported By -->
+        <div class="form-group">
+            <label for="reportedBy">Reported By</label>
+            <input type="text" id="reportedBy" name="reportedBy" placeholder="Enter Reporter Name" required>
+        </div>
+
+        <!-- Failure Remarks -->
+        <div class="form-group">
+            <label for="failureRemarks">Failure Remarks</label>
+            <textarea id="failureRemarks" name="failureRemarks" rows="3" placeholder="Enter any remarks"></textarea>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

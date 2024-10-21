@@ -1,6 +1,7 @@
 package com.electronics.store.electronocs_Store.controller;
 
 import com.electronics.store.electronocs_Store.dto.APIResponseMessage;
+import com.electronics.store.electronocs_Store.dto.PageableResponse;
 import com.electronics.store.electronocs_Store.dto.UserDTO;
 import com.electronics.store.electronocs_Store.services.UserService;
 import jakarta.validation.Valid;
@@ -45,8 +46,12 @@ public ResponseEntity<APIResponseMessage> deleteUserById(@PathVariable String us
 }
 //get All
 @GetMapping("/fetchAllUser")
-public ResponseEntity<List<UserDTO>> fetchAllUser(){
-    List<UserDTO> userDTOS = userService.getAllUser();
+public ResponseEntity<PageableResponse<UserDTO>> fetchAllUser(@RequestParam(value="pageNumber",defaultValue = "0",required = false)int pageNumber,
+                                                              @RequestParam(value="pageSize",defaultValue = "10",required = false)int pageSize,
+                                                              @RequestParam(value="sortBy",defaultValue = "name",required = false )String sortBy,
+                                                              @RequestParam(value="sortDir",defaultValue = "ASC",required = false )String sortDir
+){//page size means how many data show in page , pageNumber which page used //sortBy which field sorted required //sortDir ASC and desc
+    PageableResponse<UserDTO> userDTOS = userService.getAllUser(pageNumber,pageSize,sortBy,sortDir);
     return new ResponseEntity<>(userDTOS,HttpStatus.OK);
 }
 //get Single
