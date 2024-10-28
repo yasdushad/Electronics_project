@@ -43,4 +43,17 @@ public class GlobalExceptionHandler {
     });
     return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
+
+    //handle Bad Request Exception
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<APIResponseMessage> handleBadRequestException(BadRequestException ex){
+        logger.info("Bad API Request ");
+        APIResponseMessage response  = APIResponseMessage.builder()
+                .message(ex.getMessage())
+                .httpStatus(HttpStatus.BAD_REQUEST)
+                .success(false)
+                .build();
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+
+    }
 }

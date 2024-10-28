@@ -4,6 +4,7 @@ import com.electronics.store.electronocs_Store.dto.PageableResponse;
 import com.electronics.store.electronocs_Store.dto.UserDTO;
 import com.electronics.store.electronocs_Store.entity.User;
 import com.electronics.store.electronocs_Store.exception.ResourceNotFoundException;
+import com.electronics.store.electronocs_Store.helper.Helper;
 import com.electronics.store.electronocs_Store.repository.UserRepository;
 import com.electronics.store.electronocs_Store.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -73,14 +74,15 @@ public class UserServiceImpl implements UserService {
         Sort sort = (sortDir.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()):(Sort.by(sortBy).ascending());
         Pageable pageable = PageRequest.of(pageNumber,pageSize,sort);
         Page<User> page = userRepository.findAll(pageable);
-        List<User> user = page.getContent();
-        List<UserDTO> dtoList = user.stream().map(user1 -> entityTODto(user1)).collect(Collectors.toList());
-        PageableResponse<UserDTO> response = new PageableResponse<>();
-        response.setContent(dtoList);
-        response.setPageNumber(page.getNumber());
-        response.setPageSize(page.getSize());
-        response.setTotalElements(page.getTotalElements());
-        response.setLastPage(page.isLast());
+//        List<User> user = page.getContent();
+//        List<UserDTO> dtoList = user.stream().map(user1 -> entityTODto(user1)).collect(Collectors.toList());
+//        PageableResponse<UserDTO> response = new PageableResponse<>();
+//        response.setContent(dtoList);
+//        response.setPageNumber(page.getNumber());
+//        response.setPageSize(page.getSize());
+//        response.setTotalElements(page.getTotalElements());
+//        response.setLastPage(page.isLast());
+        PageableResponse<UserDTO> response = Helper.getpageableResponse(page,UserDTO.class);
 
         return response;
     }
