@@ -1,6 +1,7 @@
 package com.electronics.store.electronocs_Store.services;
 
 import com.electronics.store.electronocs_Store.dto.CategoryDto;
+import com.electronics.store.electronocs_Store.dto.PageableResponse;
 
 import java.util.List;
 
@@ -12,7 +13,8 @@ public interface CategoryService {
     //delete
     public String deleteCategoryById(String categoryKid );
     //get All Category
-    public List<CategoryDto> getAllCategory();
+    public PageableResponse<CategoryDto> getAllCategory(int pageNumber, int pageSize, String sortBy, String sortDir);
     //get Category By ID
     public CategoryDto getCategoryById(String categoryKid);
+    public List<CategoryDto> fetchAllCategoryList();
 }

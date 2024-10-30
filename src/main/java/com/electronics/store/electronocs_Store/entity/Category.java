@@ -23,7 +23,7 @@ public class Category {
     private String title;
     @Column(name="category_desc",length=58,nullable = false)
     private String description;
-    @Column(name="category_coverImage",length=68)
+    @Column(name="category_coverImage")
     private String coverImage;
 
 }

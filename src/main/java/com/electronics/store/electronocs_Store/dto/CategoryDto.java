@@ -20,6 +20,6 @@ public class CategoryDto {
     private String title;
     @NotBlank(message = "Description is required")
     private String description;
-    @NotBlank(message = "Cover Image is required")
+//    @NotBlank(message = "Cover Image is required")
     private String coverImage;
 }
