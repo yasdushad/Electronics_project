@@ -27,7 +27,7 @@ private UserService userService;
 
 @Autowired
 private FileService fileService;
-@Value(("$(user.profile.image.path)"))
+@Value("${user.profile.image.path}")
 private String imageFilePath;
 //create
 @PostMapping
@@ -95,6 +95,6 @@ public ResponseEntity<PageableResponse<UserDTO>> fetchAllUser(@RequestParam(valu
 
 
 
-    //serve user image
+    //serve user image 
 }
 

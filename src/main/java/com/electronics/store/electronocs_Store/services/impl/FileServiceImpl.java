@@ -22,13 +22,13 @@ Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
         String uniqueFilename = UUID.randomUUID().toString();
         String extension = fileName.substring(fileName.lastIndexOf("."));
         String fileNameWithExtension = uniqueFilename+extension;
-        String fullPathWithFileName = path+ File.separator+fileNameWithExtension;
+        String fullPathWithFileName = path+fileNameWithExtension;
         if(extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".jpg")|| extension.equalsIgnoreCase(".jpeg")){
 
 
             //file save
             File folder = new File(path);
-            if(folder.exists()){
+            if(!folder.exists()){
                 //create folder
                 folder.mkdirs();
             }
